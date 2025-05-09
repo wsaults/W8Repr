@@ -31,7 +31,7 @@ struct SummaryView: View {
                     ContentUnavailableView(
                         "Start Tracking!",
                         systemImage: "person.badge.plus",
-                        description: Text("Tap the + button to track your reps!")
+                        description: Text("Enter your reps below.")
                     )
                 } else {
                     Chart(typeGroupedData, id: \.type) { item in

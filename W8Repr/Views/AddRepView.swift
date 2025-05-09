@@ -39,6 +39,7 @@ struct AddRepView: View {
         .padding(10)
         .background(Color.gray.opacity(0.3))
         .cornerRadius(10)
+        .padding(.horizontal)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Button("Add") {

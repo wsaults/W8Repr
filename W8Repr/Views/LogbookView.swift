@@ -19,7 +19,7 @@ struct LogbookView: View {
                     ContentUnavailableView(
                         "No Reps Logged",
                         systemImage: "book.closed",
-                        description: Text("Add your first rep entry to start tracking your progress")
+                        description: Text("Add your first rep entry to start tracking your progress.")
                     )
                 } else {
                     HistorySectionView(entries: entries)
