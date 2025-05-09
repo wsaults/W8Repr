@@ -50,7 +50,7 @@ struct ContentView: View {
         }
         .toast(
             isPresented: $showingInitialDataToast,
-            message: "Sample data added. Feel free to delete and add your own entries!",
+            message: "Sample data added. Feel free to delete and add your own reps!",
             systemImage: "info.circle"
         )
     }

@@ -1,5 +1,5 @@
 //
-//  AddWeightView.swift
+//  AddRepView.swift
 //  W8Repr
 //
 //  Created by Will Saults on 5/9/25.
@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddRepView: View {
     @Environment(\.modelContext) var modelContext
+    @FocusState private var isTextFieldFocused: Bool
     
     @State private var repCountString: String = ""
     @State private var selectedType: RepType = .pushups
@@ -19,39 +20,40 @@ struct AddRepView: View {
     }
     
     var body: some View {
-        VStack(alignment: .trailing, spacing: 20) {
+        HStack {
+            Picker("Exercise Type", selection: $selectedType) {
+                ForEach(RepType.allCases, id: \.self) { type in
+                    Text(type.rawValue.capitalized)
+                }
+            }
+            
             Spacer()
             
-            HStack {
-                Picker("Exercise Type", selection: $selectedType) {
-                    ForEach(RepType.allCases, id: \.self) { type in
-                        Text(type.rawValue.capitalized)
-                    }
-                }
-                
-                TextField("Reps", text: $repCountString)
-                    .frame(width: 100)
-                    .keyboardType(.numberPad)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.horizontal)
-            }
-            
-            Button {
-                let entry = RepEntry(count: repCount, type: selectedType)
-                modelContext.insert(entry)
-                try? modelContext.save()
-            } label: {
-                Text("Add")
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(.blue)
-                    .foregroundStyle(.white)
-                    .cornerRadius(10)
-            }
-            .disabled(repCount == 0)
+            TextField("Reps", text: $repCountString)
+                .frame(width: 80)
+                .keyboardType(.numberPad)
+                .textFieldStyle(.roundedBorder)
+                .padding(.horizontal)
+                .focused($isTextFieldFocused)
         }
-        .padding()
+        .padding(10)
+        .background(Color.gray.opacity(0.3))
+        .cornerRadius(10)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Button("Add") {
+                    let entry = RepEntry(count: repCount, type: selectedType)
+                    modelContext.insert(entry)
+                    try? modelContext.save()
+                }
+                .disabled(repCount == 0)
+                .opacity(repCount == 0 ? 0.5 : 1)
+                Spacer()
+                Button("Close") {
+                    isTextFieldFocused = false
+                }
+            }
+        }
     }
 }
 

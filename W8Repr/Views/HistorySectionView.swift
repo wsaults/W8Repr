@@ -26,10 +26,10 @@ struct HistorySectionView: View {
                     Text(entry.date, formatter: Self.dateFormatter)
                     Spacer()
                     HStack(spacing: 4) {
-//                        Text(entry.count)
-//                        .fontWeight(.bold)
-//                        
-//                        Text(entry.type.rawValue)
+                        Text("\(entry.count)")
+                            .fontWeight(.bold)
+//
+                        Text(entry.type.rawValue)
                     }
                 }
                 .padding(.vertical, 8)

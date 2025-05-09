@@ -10,16 +10,16 @@ import SwiftData
 
 struct LogbookView: View {
     var entries: [RepEntry]
-    @State private var showingAddWeight = false
+    @State private var showingAddRep = false
     
     var body: some View {
         NavigationStack {
             VStack {
                 if entries.isEmpty {
                     ContentUnavailableView(
-                        "No Weight Entries",
+                        "No Reps Logged",
                         systemImage: "book.closed",
-                        description: Text("Add your first weight entry to start tracking your progress")
+                        description: Text("Add your first rep entry to start tracking your progress")
                     )
                 } else {
                     HistorySectionView(entries: entries)
@@ -29,13 +29,13 @@ struct LogbookView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        showingAddWeight = true
+                        showingAddRep = true
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .sheet(isPresented: $showingAddWeight) {
+            .sheet(isPresented: $showingAddRep) {
                 AddRepView()
             }
         }

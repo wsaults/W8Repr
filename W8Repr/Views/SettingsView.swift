@@ -25,7 +25,7 @@ struct SettingsView: View {
             Button(role: .destructive) {
                 showingDeleteAlert = true
             } label: {
-                Text("Delete All Weight Entries")
+                Text("Delete All Rep Entries")
             }
         } header: {
             Text("Danger Zone")
@@ -59,7 +59,7 @@ struct SettingsView: View {
         } header: {
             Text("Reminders")
         } footer: {
-            Text("You'll receive a notification at the specified time every day to log your weight.")
+            Text("You'll receive a notification at the specified time every day to log your reps.")
         }
     }
     
@@ -85,7 +85,7 @@ struct SettingsView: View {
                     }
                 }
             } message: {
-                Text("Are you sure you want to delete all weight entries? This action cannot be undone.")
+                Text("Are you sure you want to delete all rep entries? This action cannot be undone.")
             }
             .alert("Notifications Disabled", isPresented: $showingNotificationPermissionAlert) {
                 Button("OK", role: .cancel) {

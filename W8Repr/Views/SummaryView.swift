@@ -12,19 +12,49 @@ import SwiftUI
 struct SummaryView: View {
     var entries: [RepEntry]
     
+    private var last7DaysEntries: [RepEntry] {
+        let calendar = Calendar.current
+        let sevenDaysAgo = calendar.date(byAdding: .day, value: -7, to: .now)!
+        return entries.filter { $0.date >= sevenDaysAgo }
+    }
+    
+    private var typeGroupedData: [(type: RepType, count: Int)] {
+        Dictionary(grouping: last7DaysEntries, by: \.type)
+            .map { (type: $0.key, count: $0.value.reduce(0) { $0 + $1.count }) }
+            .sorted { $0.count > $1.count }
+    }
+    
     var body: some View {
         NavigationStack {
-            VStack {
+            ScrollView {
                 if entries.isEmpty {
                     ContentUnavailableView(
                         "Start Tracking!",
                         systemImage: "person.badge.plus",
-                        description: Text("Tap the + button to track your weight")
+                        description: Text("Tap the + button to track your reps!")
                     )
+                } else {
+                    Chart(typeGroupedData, id: \.type) { item in
+                        SectorMark(
+                            angle: .value("Count", item.count),
+                            innerRadius: .ratio(0.618),
+                            angularInset: 1.5
+                        )
+                        .cornerRadius(3)
+                        .foregroundStyle(by: .value("Type", item.type.rawValue.capitalized))
+                    }
+                    .frame(height: 300)
+                    .padding()
+                    .chartLegend(position: .bottom, alignment: .center)
+                    
+                    Text("Last 7 Days")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
                 
                 Spacer()
-                
+            }
+            .safeAreaInset(edge: .bottom) {
                 AddRepView()
                     .padding(.bottom)
             }

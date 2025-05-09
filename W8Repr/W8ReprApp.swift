@@ -13,5 +13,6 @@ struct W8ReprApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [RepEntry.self])
     }
 }

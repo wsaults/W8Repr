@@ -37,8 +37,8 @@ class NotificationManager: ObservableObject {
         
         if isReminderEnabled {
             let content = UNMutableNotificationContent()
-            content.title = "Time to Log Your Weight"
-            content.body = "Don't forget to log your weight for today!"
+            content.title = "Time to Log Your Reps!"
+            content.body = "Don't forget to log your reps for today!"
             content.sound = .default
             
             // Create date components from the selected time
@@ -48,7 +48,7 @@ class NotificationManager: ObservableObject {
             // Create the trigger for daily notification at specified time
             let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
             
-            let request = UNNotificationRequest(identifier: "weightLogReminder",
+            let request = UNNotificationRequest(identifier: "repLogReminder",
                                              content: content,
                                              trigger: trigger)
             
