@@ -34,14 +34,30 @@ struct SummaryView: View {
                         description: Text("Enter your reps below.")
                     )
                 } else {
+                    let totalReps = last7DaysEntries.reduce(0) { $0 + $1.count }
+                    Text("Total Reps: \(totalReps)")
+                        .font(.title2)
+                        .bold()
+                        .padding(.top)
+                    
                     Chart(typeGroupedData, id: \.type) { item in
                         SectorMark(
                             angle: .value("Count", item.count),
-                            innerRadius: .ratio(0.618),
+                            innerRadius: .ratio(0.4),
                             angularInset: 1.5
                         )
                         .cornerRadius(3)
                         .foregroundStyle(by: .value("Type", item.type.rawValue.capitalized))
+                        .annotation(position: .overlay) {
+                            VStack {
+                                Text(item.type.rawValue.capitalized)
+                                    .font(.caption)
+                                    .foregroundStyle(.white)
+                                Text("\(item.count)")
+                                    .font(.caption2)
+                                    .foregroundStyle(.white)
+                            }
+                        }
                     }
                     .frame(height: 300)
                     .padding()
